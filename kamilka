@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+      <title>Slovar</title>
+	  <link rel="stylesheet" type="text/css" href="style.css">
+	  </head>
+	  <body>
+	  <div class="header">
+	  <h1>Словарь программиста</h1>
+	  </div>
+	  <div class="wrapper">
+	  <div class="words">
+	  <input type="text" id="search" placeholder="search...">
+	  <button onclick="search()">Начать</button>
+	  <ul id="word_list">
+	  </ul>
+	  </div>
+	  <div class="word">
+<h3 id="word_text"></h3>	
+<p id="definition"></p> 
+<hr>
+<h3>Связанные слова
+</h3>
+<li id="related"></li>
+ </div>
+	  </div>
+	  </body>
+	  
+	  </html>
+	  <script type="text/javascript">
+	  var dictionary =[
+	  {  word: "Жесткий диск",
+	     def:"жёсткий диск, винчестер — запоминающее устройство (устройство хранения информации) произвольного доступа, основанное на принципе магнитной записи. Является основным накопителем данных в большинстве компьютеров.",
+		 rel:["SATA, PATA, SSD","HDD"]
+		 
+	  },
+	  {word:"Интерфейс",
+	  def:"Способ взаимодействия устройств друг с другом и не только устройств.",
+	  rel:["IDE", "ATA", "eSATA","SAS","SCSI"]},
+	  {word:"CPU",
+	  def:"Центральная часть компьютера, выполняющая заданные программой преобразования информации и осуществляющая управление всем вычислительным процессом.",
+	  rel:["мозг","АЛУ"]},
+	  {word:"IDE",
+	  def:"в переводе Integrated Drive Electronic, что буквально означает встроенный контроллер",
+	  rel:["интерфейс передачи данных","древний","80ые года"]}
+	  ,{word:"Архитектура ЭВМ",
+	  def:"многоуровневая иерархия аппаратурно- программных средств из которых строится ЭВМ. ",
+	  rel:["комплекс технических и программных средств"]},
+	  {word:"Кабели",
+	  def:"Электрический, герметически изолированный провод для подземных и подводных линий.",
+	  rel:["коаксиальный", "витальная пара", "оптоволоконный"]},
+	  {word:"Принтера",
+	  def:" это внешнее периферийное устройство компьютера, предназначенное для вывода текстовой или графической информации, хранящейся в компьютере, на твёрдый физический носитель, обычно бумагу или полимерную плёнку",
+	  rel:["струйный", "матричный", "лазерный", "светодиодная печать"]},
+	  {word:"Дисплеи",
+	  def:"электронное устройство, предназначенное для визуального отображения информации.",
+	  rel:["LED", "IPS", "FED"]},
+	  {word:"Мат.плата",
+	  def:"главная монтажная деталь, обеспечивает взаимодействие различных устройств.",
+	  rel:["текстолит","дорожки","транзистеры"]},
+	  {word:"ОЗУ",
+	  def:"Оперативная память по своей сути это память для временного хранения информации о запущенных программах, службах и процессах.",
+	  rel:["RAM", "ROM"]},
+	  {word:"Шины",
+	  def:"шина — это «паутина», соединяющая между собой все устройства и отвечающая за передачу информации между ними. Расположена она на материнской плате и внешне не видна.",
+	  rel:["ISA", "EISA", "AGP", "шина данных"]},
+	  {word:"ВМ",
+	  def:"Идея этой машины в независимой работе множества копий ВМ можно запускать отдельно или вместе на одной машине.",
+	  rel:["мультипрограммирование", "вычислительный процесс"]},
+	  ];
+	  init=function()
+	  {
+	  for (var i=0; i < dictionary.length; i++){
+	    document.getElementById('word_list').innerHTML += "<li onclick='show("+i+")'>"+
+		dictionary[i].word+"</li>";
+	  }}
+	  init();
+	  show=function(i){
+	  document.getElementById('word_text').innerHTML=dictionary[i].word;
+	  document.getElementById('definition').innerHTML=dictionary[i].def;
+	  
+	  var list="";
+	  
+	  for(var j=0; j<dictionary[i].rel.length;j++){
+	  
+	  list+="<li>" + dictionary[i].rel[j]+"</li>";
+	  document.getElementById('related').innerHTML=list;
+	  }
+	  }
+	  show(0);
+	  search = function (){
+	  query=document.getElementById('search').value;
+	  if (query==""){
+	  return;
+	  }
+	  found =-1;
+	  for(var i=0; i<dictionary.length; i++){
+	  if(query==dictionary[i].word){
+	  found=i;
+	  break;
+	  }else{
+	  document.getElementById('word_text').innerHTML="Слово не найдено";
+	  document.getElementById('definition').innerHTML="Введенное слово не найдено в нашем словаре.";
+	  document.getElementById('related').innerHTML="Нет связанных слов";
+	 
+	 }
+	  }
+	  if (found>=0){
+	  show(found);
+	  }
+	   }
+	  </script>
+	  
+body{
+	font-size: 20px;
+	
+}
+.header{
+	width: 50%;
+	margin: 40px auto 0px;
+	color: white;
+	background: #483D8B;
+	text-align: center;
+	border: 1px solid gray;
+	border-radius: 8px 200px 5px 5px;
+}
+.wrapper {
+	width:50%;
+	margin:0px auto;
+	border:1px solid gray;
+	
+}
+.wrapper:after{
+	content: "";
+	display: block;
+	clear: both;
+	
+	
+}
+.words{
+	width: 40%;
+	background: #dcdcdc;
+	padding-top: 10px;
+	float: left;
+	
+}
+.word {
+	width: 40%;
+	float: left;
+	padding-left:10px
+	
+}
+#word_list{
+	max-height:400px;
+	overflow-y: scroll;
+	
+}
+li{
+	list-style-type:none;
+	line-height: 1.4em;
+}
+li:hover{
+	cursor:pointer;
+	color:#483D8B;
+	
+}
+ul{
+	margin-left:-10px;
+	
+}
+h3{
+	color:#483D8B;
+
+}
+#search{
+	margin-left:10px;
+	width:60%;
+	padding:5px;
+	height:13px;
+	
+	
+}
+
+button{
+	height: 24px;
+	background:#483D8B;
+	color:white;
+	border:none;
+	border-radius:10px;
+}
